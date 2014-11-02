@@ -16,8 +16,7 @@ namespace Books.Persistence
             {
                 Id = Guid.NewGuid(),
                 Title = "Cryptonomicon",
-                // TODO: get Neal from Author repository
-                Authors = new List<Author> { new Author { Id = Guid.NewGuid(), Name = "Neal Stephenson" } },
+                Authors = new List<string> { "Neal Stephenson" },
                 // TODO: get Avon from Publisher repository
                 Publisher = new Publisher { Id = Guid.NewGuid(), Name = "Avon" }
             };
@@ -29,8 +28,7 @@ namespace Books.Persistence
             {
                 Id = Guid.NewGuid(),
                 Title = "Habibi",
-                // TODO: get Craig from Author repository
-                Authors = new List<Author> { new Author { Id = Guid.NewGuid(), Name = "Craig Thompson" } },
+                Authors = new List<string> { "Craig Thompson" },
                 // TODO: get Pantheon from Publisher repository
                 Publisher = new Publisher { Id = Guid.NewGuid(), Name = "Pantheon Books" }
             };

@@ -11,6 +11,6 @@ namespace Books.Entities
 
         public Publisher Publisher { get; set; }
 
-        public ICollection<Author> Authors { get; set; }
+        public ICollection<string> Authors { get; set; }
     }
 }
