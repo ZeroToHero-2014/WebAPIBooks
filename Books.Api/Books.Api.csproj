@@ -79,6 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\BooksController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -97,8 +98,17 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\" />
     <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Books.Entities\Books.Entities.csproj">
+      <Project>{77c278af-76f7-4cd5-9e9a-bccc41de9835}</Project>
+      <Name>Books.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Books.Persistence\Books.Persistence.csproj">
+      <Project>{1164ce00-a90d-46c8-9971-da9cbb342e6d}</Project>
+      <Name>Books.Persistence</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
