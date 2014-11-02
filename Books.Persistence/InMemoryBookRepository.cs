@@ -62,7 +62,12 @@ namespace Books.Persistence
 
         public void Update(Book book)
         {
-            throw new MissingBookException();
+            books.AddOrUpdate(
+                book.Id,
+                // we expect the key to be present,
+                // so if it's not, throw exception
+                addValueFactory: _ => { throw new MissingBookException(); },
+                updateValueFactory: (id, oldBook) => book);
         }
     }
 }

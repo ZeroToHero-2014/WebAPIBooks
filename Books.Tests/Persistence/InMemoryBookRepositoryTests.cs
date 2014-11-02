@@ -17,7 +17,8 @@ namespace Books.Tests.Persistence
             var newBook = new Book
             {
                 Id = Guid.NewGuid(),
-                Title = "Baltagul"
+                Title = "Baltagul",
+                Authors = new List<string> { "Mihail Sadoveanu" }
             };
 
             repo.Add(newBook);
