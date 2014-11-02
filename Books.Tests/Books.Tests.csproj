@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\AuthorTests.cs" />
+    <Compile Include="Persistence\InMemoryBookRepositoryTests.cs" />
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -61,7 +62,12 @@
       <Project>{77c278af-76f7-4cd5-9e9a-bccc41de9835}</Project>
       <Name>Books.Entities</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Books.Persistence\Books.Persistence.csproj">
+      <Project>{1164ce00-a90d-46c8-9971-da9cbb342e6d}</Project>
+      <Name>Books.Persistence</Name>
+    </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

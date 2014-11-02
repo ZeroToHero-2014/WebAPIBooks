@@ -8,5 +8,7 @@ namespace Books.Persistence
     {
         IQueryable<Book> GetAll();
         Book GetById(Guid id);
+
+        void Add(Book newBook);
     }
 }

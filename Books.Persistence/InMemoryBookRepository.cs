@@ -44,7 +44,6 @@ namespace Books.Persistence
             return books.Values.AsQueryable();
         }
 
-
         public Book GetById(Guid id)
         {
             Book book;
@@ -54,6 +53,12 @@ namespace Books.Persistence
             }
 
             return null;
+        }
+
+        public void Add(Book newBook)
+        {
+            // TODO: treat the case when the key already exists (TryAdd returns false)
+            books.TryAdd(newBook.Id, newBook);
         }
     }
 }
