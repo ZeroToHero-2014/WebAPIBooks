@@ -2,6 +2,8 @@
 using Books.Persistence;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Books.Tests.Persistence
 {
@@ -26,6 +28,52 @@ namespace Books.Tests.Persistence
 
             Assert.AreEqual(newBook.Id, persistedBook.Id);
             Assert.AreEqual(newBook.Title, persistedBook.Title);
+        }
+
+        [TestMethod]
+        public void CannotUpdateBookNotInRepo()
+        {
+            var book = new Book
+            {
+                Id = Guid.NewGuid(),
+                Title = "Growing Object-Oriented Software, Guided by Tests",
+                Authors = new List<string> { "Steve Freeman", "Nat Pryce" }
+            };
+
+            var repo = new InMemoryBookRepository();
+
+            try
+            {
+                repo.Update(book);
+                Assert.Fail("Update did not throw exception for missing book");
+            }
+            catch (MissingBookException)
+            {
+                Assert.IsTrue(true, "Cannot update book not in repo");
+            }
+        }
+
+        [TestMethod]
+        public void CanUpdateBookInRepo()
+        {
+            var repo = new InMemoryBookRepository();
+            var book = repo.GetAll().First();
+
+            var updatedBook = new Book {
+                Id = book.Id,
+                Title = book.Title,
+                Subtitle = book.Subtitle + "(2nd ed.)",
+                Publisher = book.Publisher,
+                Authors = new List<string>(book.Authors)
+            };
+
+            repo.Update(updatedBook);
+
+            // create new instance of repo
+            var newRepo = new InMemoryBookRepository();
+            var persistedUpdatedBook = newRepo.GetById(updatedBook.Id);
+
+            Assert.AreEqual(updatedBook.Subtitle, persistedUpdatedBook.Subtitle);
         }
     }
 }

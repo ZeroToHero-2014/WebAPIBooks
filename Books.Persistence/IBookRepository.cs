@@ -10,5 +10,6 @@ namespace Books.Persistence
         Book GetById(Guid id);
 
         void Add(Book newBook);
+        void Update(Book book);
     }
 }

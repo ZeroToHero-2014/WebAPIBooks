@@ -58,5 +58,11 @@ namespace Books.Persistence
             // TODO: treat the case when the key already exists (TryAdd returns false)
             books.TryAdd(newBook.Id, newBook);
         }
+
+
+        public void Update(Book book)
+        {
+            throw new MissingBookException();
+        }
     }
 }
