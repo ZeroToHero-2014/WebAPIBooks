@@ -22,9 +22,16 @@ namespace Books.Api.Controllers
         }
 
         // GET: api/Books/c2677ee2-02ad-44dc-93b1-e64a2b57f3fe
-        public Book Get(Guid id)
+        public IHttpActionResult Get(Guid id)
         {
-            throw new NotImplementedException("Don't know yet how to get book by id");
+            var book = bookRepository.GetById(id);
+
+            if (book == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(book);
         }
 
         // POST: api/Books

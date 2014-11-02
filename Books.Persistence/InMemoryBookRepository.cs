@@ -43,5 +43,17 @@ namespace Books.Persistence
         {
             return books.Values.AsQueryable();
         }
+
+
+        public Book GetById(Guid id)
+        {
+            Book book;
+            if (books.TryGetValue(id, out book))
+            {
+                return book;
+            }
+
+            return null;
+        }
     }
 }
