@@ -19,6 +19,9 @@ namespace Books.Api
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            // xml serializer
+            config.Formatters.XmlFormatter.UseXmlSerializer = true;
         }
     }
 }

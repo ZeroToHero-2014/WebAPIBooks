@@ -35,10 +35,13 @@ namespace Books.Api.Controllers
         }
 
         // POST: api/Books
-        // TODO: make this not-void; return location of new book
-        public void Post([FromBody]Book newBook)
+        public IHttpActionResult Post([FromBody]Book newBook)
         {
-            throw new NotImplementedException("Don't know yet how to persist a new book");
+            // is this the right place to generate the id?
+            newBook.Id = Guid.NewGuid();
+            bookRepository.Add(newBook);
+
+            return CreatedAtRoute("DefaultApi", new { id = newBook.Id }, newBook);
         }
 
         // PUT: api/Books/c2677ee2-02ad-44dc-93b1-e64a2b57f3fe
