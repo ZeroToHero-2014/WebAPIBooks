@@ -45,9 +45,21 @@ namespace Books.Api.Controllers
         }
 
         // PUT: api/Books/c2677ee2-02ad-44dc-93b1-e64a2b57f3fe
-        public void Put(Guid id, [FromBody]Book book)
+        public IHttpActionResult Put(Guid id, [FromBody]Book book)
         {
-            throw new NotImplementedException("Don't know yet how to update a book");
+            if (id != book.Id)
+            {
+                return BadRequest("ids don't match");
+            }
+            try
+            {
+                bookRepository.Update(book);
+                return Ok(book);
+            }
+            catch (MissingBookException)
+            {
+                return NotFound();
+            }
         }
 
         // DELETE: api/Books/c2677ee2-02ad-44dc-93b1-e64a2b57f3fe
