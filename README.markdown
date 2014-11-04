@@ -5,6 +5,10 @@ Plan de lecție
 
 2. Exemplu pe http://www.youtypeitwepostit.com/
 
+3. Ce sunt Web APIs?
+
+4. Exemplu pe http://www.youtypeitwepostit.com/api/
+
 1. Creat controller with read/write actions, implementat Get
 
 2. Văzut răspuns în browser (xml)
