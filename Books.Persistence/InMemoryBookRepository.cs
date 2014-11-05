@@ -1,68 +1,86 @@
 ﻿using Books.Entities;
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Books.Persistence
 {
-    public class InMemoryBookRepository : IRepository<Book>
+    using System.Collections.Generic;
+
+    public class InMemoryRepository<TEntity> : IRepository<TEntity>
+        where TEntity : class, IEntity
     {
-        private static readonly ConcurrentDictionary<Guid, Book> Books = new ConcurrentDictionary<Guid, Book>();
+        private static readonly ConcurrentDictionary<Guid, IEntity> Entities
+            = new ConcurrentDictionary<Guid, IEntity>();
 
-        static InMemoryBookRepository()
+        private static Publisher Avon = new Publisher { Id = Guid.NewGuid(), Name = "Avon" };
+
+        private static Publisher Pantheon = new Publisher { Id = Guid.NewGuid(), Name = "Pantheon Books" };
+
+        static InMemoryRepository()
         {
-            var cryptonomicon = new Book
+            // don't do this in real life
+            if (typeof(TEntity) == typeof(Book))
             {
-                Id = Guid.NewGuid(),
-                Title = "Cryptonomicon",
-                Authors = new List<string> { "Neal Stephenson" },
-                // TODO: get Avon from Publisher repository
-                Publisher = new Publisher { Id = Guid.NewGuid(), Name = "Avon" }
-            };
-            // we're inside the static constructor, so we're guaranteed exclusive access;
-            // therefore there's no need to check the return value of TryAdd
-            Books.TryAdd(cryptonomicon.Id, cryptonomicon);
+                var cryptonomicon = new Book
+                {
+                    Id = Guid.NewGuid(),
+                    Title = "Cryptonomicon",
+                    Authors = new List<string> { "Neal Stephenson" },
+                    Publisher = Avon
+                };
+                // we're inside the static constructor, so we're guaranteed exclusive access;
+                // therefore there's no need to check the return value of TryAdd
+                Entities.TryAdd(cryptonomicon.Id, cryptonomicon);
 
-            var habibi = new Book
+
+                var habibi = new Book
+                {
+                    Id = Guid.NewGuid(),
+                    Title = "Habibi",
+                    Authors = new List<string> { "Craig Thompson" },
+                    Publisher = Pantheon
+                };
+                // we're inside the static constructor, so we're guaranteed exclusive access;
+                // therefore there's no need to check the return value of TryAdd
+                Entities.TryAdd(habibi.Id, habibi);
+            }
+
+            if (typeof(TEntity) == typeof(Publisher))
             {
-                Id = Guid.NewGuid(),
-                Title = "Habibi",
-                Authors = new List<string> { "Craig Thompson" },
-                // TODO: get Pantheon from Publisher repository
-                Publisher = new Publisher { Id = Guid.NewGuid(), Name = "Pantheon Books" }
-            };
-            // we're inside the static constructor, so we're guaranteed exclusive access;
-            // therefore there's no need to check the return value of TryAdd
-            Books.TryAdd(habibi.Id, habibi);
+                // we're inside the static constructor, so we're guaranteed exclusive access;
+                // therefore there's no need to check the return value of TryAdd
+                Entities.TryAdd(Avon.Id, Avon);
+                Entities.TryAdd(Pantheon.Id, Pantheon);
+            }
         }
 
-        public IQueryable<Book> GetAll()
+        public IQueryable<TEntity> GetAll()
         {
-            return Books.Values.AsQueryable();
+            return Entities.Values.Cast<TEntity>().AsQueryable();
         }
 
-        public Book GetById(Guid id)
+        public TEntity GetById(Guid id)
         {
-            Book book;
-            if (Books.TryGetValue(id, out book))
+            IEntity entity;
+            if (Entities.TryGetValue(id, out entity))
             {
-                return book;
+                return (TEntity)entity;
             }
 
             return null;
         }
 
-        public void Add(Book newEntity)
+        public void Add(TEntity newEntity)
         {
             // TODO: treat the case when the key already exists (TryAdd returns false)
-            Books.TryAdd(newEntity.Id, newEntity);
+            Entities.TryAdd(newEntity.Id, newEntity);
         }
 
 
-        public void Update(Book entity)
+        public void Update(TEntity entity)
         {
-            Books.AddOrUpdate(
+            Entities.AddOrUpdate(
                 entity.Id,
                 // we expect the key to be present,
                 // so if it's not, throw exception
@@ -72,10 +90,10 @@ namespace Books.Persistence
 
         public void Delete(Guid id)
         {
-            Book existingBook;
-            // ignore missing value: someone tried to delete non existent book,
+            IEntity existingEntity;
+            // ignore missing value: someone tried to delete non existent entity,
             // but we don't care
-            Books.TryRemove(id, out existingBook);
+            Entities.TryRemove(id, out existingEntity);
         }
     }
 }

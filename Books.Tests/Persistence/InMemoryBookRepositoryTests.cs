@@ -13,7 +13,7 @@ namespace Books.Tests.Persistence
         [TestMethod]
         public void AddingNewBookMakesItPersistent()
         {
-            var repo = new InMemoryBookRepository();
+            var repo = new InMemoryRepository<Book>();
             var newBook = new Book
             {
                 Id = Guid.NewGuid(),
@@ -24,7 +24,7 @@ namespace Books.Tests.Persistence
             repo.Add(newBook);
 
             // create new instance of repo
-            var newRepo = new InMemoryBookRepository();
+            var newRepo = new InMemoryRepository<Book>();
             var persistedBook = newRepo.GetById(newBook.Id);
 
             Assert.AreEqual(newBook.Id, persistedBook.Id);
@@ -41,7 +41,7 @@ namespace Books.Tests.Persistence
                 Authors = new List<string> { "Steve Freeman", "Nat Pryce" }
             };
 
-            var repo = new InMemoryBookRepository();
+            var repo = new InMemoryRepository<Book>();
 
             try
             {
@@ -57,7 +57,7 @@ namespace Books.Tests.Persistence
         [TestMethod]
         public void CanUpdateBookInRepo()
         {
-            var repo = new InMemoryBookRepository();
+            var repo = new InMemoryRepository<Book>();
             var book = repo.GetAll().First();
 
             var updatedBook = new Book {
@@ -71,7 +71,7 @@ namespace Books.Tests.Persistence
             repo.Update(updatedBook);
 
             // create new instance of repo
-            var newRepo = new InMemoryBookRepository();
+            var newRepo = new InMemoryRepository<Book>();
             var persistedUpdatedBook = newRepo.GetById(updatedBook.Id);
 
             Assert.AreEqual(updatedBook.Subtitle, persistedUpdatedBook.Subtitle);

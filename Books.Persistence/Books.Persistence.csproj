@@ -41,7 +41,7 @@
   <ItemGroup>
     <Compile Include="IRepository.cs" />
     <Compile Include="InMemoryBookRepository.cs" />
-    <Compile Include="MissingBookException.cs" />
+    <Compile Include="MissingEntityException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

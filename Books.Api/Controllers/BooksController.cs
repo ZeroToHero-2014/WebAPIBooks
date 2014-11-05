@@ -12,7 +12,7 @@ namespace Books.Api.Controllers
 
         public BooksController()
         {
-            bookRepository = new InMemoryBookRepository();
+            bookRepository = new InMemoryRepository<Book>();
         }
 
         // GET: api/Books
