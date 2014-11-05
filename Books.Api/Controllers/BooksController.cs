@@ -8,7 +8,7 @@ namespace Books.Api.Controllers
 {
     public class BooksController : ApiController
     {
-        private readonly IBookRepository bookRepository;
+        private readonly IRepository<Book> bookRepository;
 
         public BooksController()
         {

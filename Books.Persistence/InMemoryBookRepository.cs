@@ -6,9 +6,9 @@ using System.Linq;
 
 namespace Books.Persistence
 {
-    public class InMemoryBookRepository : IBookRepository
+    public class InMemoryBookRepository : IRepository<Book>
     {
-        private static ConcurrentDictionary<Guid, Book> books = new ConcurrentDictionary<Guid, Book>();
+        private static readonly ConcurrentDictionary<Guid, Book> Books = new ConcurrentDictionary<Guid, Book>();
 
         static InMemoryBookRepository()
         {
@@ -22,7 +22,7 @@ namespace Books.Persistence
             };
             // we're inside the static constructor, so we're guaranteed exclusive access;
             // therefore there's no need to check the return value of TryAdd
-            books.TryAdd(cryptonomicon.Id, cryptonomicon);
+            Books.TryAdd(cryptonomicon.Id, cryptonomicon);
 
             var habibi = new Book()
             {
@@ -34,18 +34,18 @@ namespace Books.Persistence
             };
             // we're inside the static constructor, so we're guaranteed exclusive access;
             // therefore there's no need to check the return value of TryAdd
-            books.TryAdd(habibi.Id, habibi);
+            Books.TryAdd(habibi.Id, habibi);
         }
 
         public IQueryable<Book> GetAll()
         {
-            return books.Values.AsQueryable();
+            return Books.Values.AsQueryable();
         }
 
         public Book GetById(Guid id)
         {
             Book book;
-            if (books.TryGetValue(id, out book))
+            if (Books.TryGetValue(id, out book))
             {
                 return book;
             }
@@ -56,13 +56,13 @@ namespace Books.Persistence
         public void Add(Book newBook)
         {
             // TODO: treat the case when the key already exists (TryAdd returns false)
-            books.TryAdd(newBook.Id, newBook);
+            Books.TryAdd(newBook.Id, newBook);
         }
 
 
         public void Update(Book book)
         {
-            books.AddOrUpdate(
+            Books.AddOrUpdate(
                 book.Id,
                 // we expect the key to be present,
                 // so if it's not, throw exception
@@ -75,7 +75,7 @@ namespace Books.Persistence
             Book existingBook;
             // ignore missing value: someone tried to delete non existent book,
             // but we don't care
-            books.TryRemove(id, out existingBook);
+            Books.TryRemove(id, out existingBook);
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Books.Persistence
 {
-    public interface IBookRepository
+    public interface IRepository<TEntity> where TEntity : IEntity
     {
         IQueryable<Book> GetAll();
         Book GetById(Guid id);
