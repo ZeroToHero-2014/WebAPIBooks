@@ -48,7 +48,7 @@ namespace Books.Tests.Persistence
                 repo.Update(book);
                 Assert.Fail("Update did not throw exception for missing book");
             }
-            catch (MissingBookException)
+            catch (MissingEntityException)
             {
                 Assert.IsTrue(true, "Cannot update book not in repo");
             }

@@ -6,11 +6,11 @@ namespace Books.Persistence
 {
     public interface IRepository<TEntity> where TEntity : IEntity
     {
-        IQueryable<Book> GetAll();
-        Book GetById(Guid id);
+        IQueryable<TEntity> GetAll();
+        TEntity GetById(Guid id);
 
-        void Add(Book newBook);
-        void Update(Book book);
+        void Add(TEntity newEntity);
+        void Update(TEntity entity);
 
         void Delete(Guid id);
     }

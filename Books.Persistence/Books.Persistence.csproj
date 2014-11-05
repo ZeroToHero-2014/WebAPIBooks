@@ -39,7 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IBookRepository.cs" />
+    <Compile Include="IRepository.cs" />
     <Compile Include="InMemoryBookRepository.cs" />
     <Compile Include="MissingBookException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

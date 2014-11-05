@@ -12,7 +12,7 @@ namespace Books.Persistence
 
         static InMemoryBookRepository()
         {
-            var cryptonomicon = new Book()
+            var cryptonomicon = new Book
             {
                 Id = Guid.NewGuid(),
                 Title = "Cryptonomicon",
@@ -24,7 +24,7 @@ namespace Books.Persistence
             // therefore there's no need to check the return value of TryAdd
             Books.TryAdd(cryptonomicon.Id, cryptonomicon);
 
-            var habibi = new Book()
+            var habibi = new Book
             {
                 Id = Guid.NewGuid(),
                 Title = "Habibi",
@@ -53,21 +53,21 @@ namespace Books.Persistence
             return null;
         }
 
-        public void Add(Book newBook)
+        public void Add(Book newEntity)
         {
             // TODO: treat the case when the key already exists (TryAdd returns false)
-            Books.TryAdd(newBook.Id, newBook);
+            Books.TryAdd(newEntity.Id, newEntity);
         }
 
 
-        public void Update(Book book)
+        public void Update(Book entity)
         {
             Books.AddOrUpdate(
-                book.Id,
+                entity.Id,
                 // we expect the key to be present,
                 // so if it's not, throw exception
-                addValueFactory: _ => { throw new MissingBookException(); },
-                updateValueFactory: (id, oldBook) => book);
+                addValueFactory: _ => { throw new MissingEntityException(); },
+                updateValueFactory: (id, oldEntity) => entity);
         }
 
         public void Delete(Guid id)

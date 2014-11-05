@@ -56,7 +56,7 @@ namespace Books.Api.Controllers
                 bookRepository.Update(book);
                 return Ok(book);
             }
-            catch (MissingBookException)
+            catch (MissingEntityException)
             {
                 return NotFound();
             }
