@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using Newtonsoft.Json;
 
 namespace Books.Api
 {
@@ -22,6 +23,11 @@ namespace Books.Api
 
             // xml serializer
             config.Formatters.XmlFormatter.UseXmlSerializer = true;
+
+            var json = GlobalConfiguration.Configuration.Formatters.JsonFormatter;
+
+            json.SerializerSettings.Formatting = Formatting.Indented;
+
         }
     }
 }
