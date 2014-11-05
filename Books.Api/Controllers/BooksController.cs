@@ -63,9 +63,11 @@ namespace Books.Api.Controllers
         }
 
         // DELETE: api/Books/c2677ee2-02ad-44dc-93b1-e64a2b57f3fe
-        public void Delete(Guid id)
+        public IHttpActionResult Delete(Guid id)
         {
-            throw new NotImplementedException("Don't know yet how to delete a book");
+            bookRepository.Delete(id);
+
+            return Ok();
         }
     }
 }

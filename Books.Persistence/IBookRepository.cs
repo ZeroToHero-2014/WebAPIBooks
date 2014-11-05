@@ -11,5 +11,7 @@ namespace Books.Persistence
 
         void Add(Book newBook);
         void Update(Book book);
+
+        void Delete(Guid id);
     }
 }

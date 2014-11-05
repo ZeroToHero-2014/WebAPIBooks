@@ -69,5 +69,13 @@ namespace Books.Persistence
                 addValueFactory: _ => { throw new MissingBookException(); },
                 updateValueFactory: (id, oldBook) => book);
         }
+
+        public void Delete(Guid id)
+        {
+            Book existingBook;
+            // ignore missing value: someone tried to delete non existent book,
+            // but we don't care
+            books.TryRemove(id, out existingBook);
+        }
     }
 }
